@@ -1,0 +1,14 @@
+Known bugs for top-memory.sh
+
+* [race condition]
+
+	The script runs *command*; in parallel, top il launched. When
+	*command* ends, top is killed.
+
+    So, if *command* is too quick to terminate (before top has been
+    launched), the top process will not get killed.
+
+	To circumevent this bug, the implementation adds a delay of 3
+	seconds before attempting to kill top if *command* fails (exit
+	code > 0).  If your system is too slow, 3 seconds may not be
+	sufficient.
